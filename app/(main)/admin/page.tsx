@@ -41,12 +41,7 @@ export default async function AdminPage() {
     }),
     prisma.systemLog.findMany({
       orderBy: { createdAt: 'desc' },
-      take: 10,
-      include: {
-        user: {
-          select: { name: true, email: true }
-        }
-      }
+      take: 10
     })
   ])
 
@@ -219,9 +214,9 @@ export default async function AdminPage() {
                       {log.level}
                     </Badge>
                   </TableCell>
-                  <TableCell className="font-medium">{log.action}</TableCell>
-                  <TableCell>{log.user?.name || 'System'}</TableCell>
-                  <TableCell className="max-w-xs truncate">{log.details}</TableCell>
+                  <TableCell className="font-medium">{log.message}</TableCell>
+                  <TableCell>System</TableCell>
+                  <TableCell className="max-w-xs truncate">{log.metadata ? JSON.stringify(log.metadata) : '-'}</TableCell>
                   <TableCell>{formatDate(log.createdAt)}</TableCell>
                 </TableRow>
               ))}
